@@ -52,17 +52,17 @@ if( isIE || isEdge ){
 }
 
 //parse location from hash
-function getUrlLatLng(){
-	var param = location.href.replace(location.protocol + '//' + location.host + '/', '');
+function getUrlLatLng(href) {
+	href = href || location.href;
 
-	if(param.indexOf('@') > -1){
-		var latLng = param.replace('@', '').split(',', 2);
+	var matches = href.match(/@([0-9.]+),([0-9.]+)$/);
+
+	if (matches && matches[1] && matches[2]) {
 		return {
-			lat: parseFloat(latLng.shift()),
-			lng: parseFloat(latLng.shift()),
-		}
+			lat: parseFloat(matches[1]),
+			lng: parseFloat(matches[2]),
+		};
 	}
 
 	return null;
 }
-
